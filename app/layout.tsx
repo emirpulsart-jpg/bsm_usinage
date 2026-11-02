@@ -1,9 +1,17 @@
 import type { Metadata, Viewport } from 'next';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { CallFloatingBar } from '@/components/CallFloatingBar';
 import { siteConfig } from '@/config/site';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
 
 export const viewport: Viewport = {
   themeColor: '#FFFFFF',
@@ -141,7 +149,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="fr" className="bg-white">
+    <html lang="fr" className={`bg-white ${montserrat.variable}`}>
       <head>
         <link rel="canonical" href={siteConfig.url} />
         <script
@@ -149,7 +157,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
-      <body className="bg-white text-neutral-900 antialiased min-h-screen flex flex-col pb-16 md:pb-0">
+      <body className={`bg-white text-neutral-900 antialiased min-h-screen flex flex-col pb-16 md:pb-0 ${montserrat.className}`}>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

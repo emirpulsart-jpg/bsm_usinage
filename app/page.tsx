@@ -22,7 +22,7 @@ export default function HomePage() {
       {/* ========================================================
           HERO SECTION AVEC VIDÉO EN LOOP (PC & Mobile plein écran latéral)
           ======================================================== */}
-      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-neutral-950">
+      <section className="relative w-full min-h-[85vh] sm:min-h-[90vh] lg:min-h-[94vh] flex items-center overflow-hidden bg-neutral-950">
         
         {/* Vidéo Mobile (< md) */}
         <video
@@ -49,45 +49,44 @@ export default function HomePage() {
         />
 
         {/* Mini calque pour faire ressortir la headline écrite sur la vidéo */}
-        <div className="absolute inset-0 bg-neutral-950/50 backdrop-brightness-[0.92]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/40" />
+        <div className="absolute inset-0 bg-neutral-950/45 backdrop-brightness-[0.92]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/45" />
 
-        {/* Contenu textuel sur la vidéo */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 sm:pt-40 lg:pt-44 pb-20 sm:pb-24 text-center text-white">
-          
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs uppercase tracking-widest text-neutral-200 font-medium">
-            <span>Atelier BSM Usinage</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
-            <span>Rumilly • Haute-Savoie</span>
+        {/* Contenu textuel sur la vidéo - Calé sur la gauche sur PC comme la référence */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-40 lg:pt-48 pb-20 sm:pb-28 text-left text-white font-montserrat">
+          <div className="max-w-3xl lg:max-w-4xl space-y-6">
+            
+            {/* Titre en MAJUSCULES avec la police exacte de l'entreprise */}
+            <h1 className="font-montserrat text-3xl sm:text-5xl lg:text-6xl xl:text-[4.15rem] font-extrabold uppercase tracking-tight text-white leading-[1.08] drop-shadow-md">
+              USINAGE DE PRÉCISION, ASSEMBLAGE ET SOUDURE EN HAUTE-SAVOIE
+            </h1>
+
+            {/* Sous-titre avec la police exacte */}
+            <p className="font-montserrat text-sm sm:text-base lg:text-lg text-white/95 max-w-2xl font-normal leading-relaxed drop-shadow-sm">
+              BSM Usinage conçoit et fabrique des pièces mécaniques d&apos;exception à Rumilly, près d&apos;Annecy.
+            </p>
+
+            {/* Les deux CTA conservés, disposés sur la gauche */}
+            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <a
+                href={`tel:${siteConfig.phone.raw}`}
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-neutral-950 font-montserrat font-bold text-xs uppercase tracking-wider hover:bg-neutral-100 transition-colors shadow-lg active:scale-[0.99] rounded-sm"
+                aria-label={`Appeler BSM Usinage au ${siteConfig.phone.display}`}
+              >
+                <Phone className="w-4 h-4 fill-current stroke-none text-[#C5A059]" />
+                <span>Appeler l&apos;atelier : {siteConfig.phone.display}</span>
+              </a>
+
+              <Link
+                href="/expertises/usinage-de-precision-sur-mesure"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-neutral-950/60 backdrop-blur-md border border-white/40 text-white font-montserrat font-semibold text-xs uppercase tracking-wider hover:bg-neutral-900/80 hover:border-white transition-colors rounded-sm"
+              >
+                <span>Découvrir nos expertises</span>
+                <ArrowRight className="w-4 h-4 text-neutral-300" />
+              </Link>
+            </div>
+
           </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-light text-white tracking-tight leading-[1.1] max-w-4xl mx-auto drop-shadow-sm">
-            Usinage de précision &amp; <span className="font-normal text-white">sports mécaniques</span> en Haute-Savoie
-          </h1>
-
-          <p className="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-neutral-200 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-sm">
-            BSM Usinage conçoit et fabrique des pièces mécaniques d&apos;exception : tournage et fraisage CNC, jantes aluminium taillées dans la masse et soudure technique à Rumilly, près d&apos;Annecy.
-          </p>
-
-          <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href={`tel:${siteConfig.phone.raw}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#C5A059] text-neutral-950 font-semibold text-xs tracking-wider uppercase hover:bg-[#d6b063] transition-colors shadow-lg active:scale-[0.99]"
-              aria-label={`Appeler BSM Usinage au ${siteConfig.phone.display}`}
-            >
-              <Phone className="w-4 h-4 fill-current stroke-none" />
-              <span>Appeler l&apos;atelier : {siteConfig.phone.display}</span>
-            </a>
-
-            <Link
-              href="/expertises/usinage-de-precision-sur-mesure"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white hover:bg-white/20 transition-colors text-xs tracking-wider uppercase font-medium"
-            >
-              <span>Découvrir nos expertises</span>
-              <ArrowRight className="w-4 h-4 text-neutral-300" />
-            </Link>
-          </div>
-
         </div>
       </section>
 
