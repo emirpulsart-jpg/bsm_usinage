@@ -1,0 +1,6 @@
+{
+  "name": "Usinage de Précision & Sports Mécaniques",
+  "description": "Atelier d'usinage de précision CNC, tournage, fraisage, jantes aluminium et sports mécaniques en Haute-Savoie (Rumilly, bassin annécien).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
