@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
@@ -11,6 +11,19 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expertisesOpen, setExpertisesOpen] = useState(false);
   const [realisationsOpen, setRealisationsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isHome = pathname === '/';
+  const isTransparent = isHome && !scrolled && !mobileMenuOpen;
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
@@ -18,30 +31,52 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-100 transition-all">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-20 sm:h-24">
-          
-          {/* Logo BSM Usinage */}
-          <Link href="/" className="flex items-baseline gap-2.5 group">
-            <span className="font-semibold tracking-tight text-xl sm:text-2xl text-neutral-950">
-              BSM <span className="font-light text-neutral-500">Usinage</span>
-            </span>
-            <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8 text-[13px] font-medium tracking-wide">
-            <Link
-              href="/"
-              className={`transition-colors py-2 ${
-                pathname === '/'
-                  ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
-                  : 'text-neutral-600 hover:text-neutral-950'
-              }`}
-            >
-              Accueil
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isTransparent
+            ? 'bg-black/25 backdrop-blur-md border-b border-white/10 text-white'
+            : 'bg-white/95 backdrop-blur-md border-b border-neutral-100 shadow-xs text-neutral-900'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex items-center justify-between h-20 sm:h-24">
+            
+            {/* Logo BSM Usinage */}
+            <Link href="/" className="flex items-baseline gap-2.5 group">
+              <span
+                className={`font-semibold tracking-tight text-xl sm:text-2xl transition-colors ${
+                  isTransparent ? 'text-white' : 'text-neutral-950'
+                }`}
+              >
+                BSM{' '}
+                <span
+                  className={`font-light transition-colors ${
+                    isTransparent ? 'text-neutral-300' : 'text-neutral-500'
+                  }`}
+                >
+                  Usinage
+                </span>
+              </span>
+              <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
             </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8 text-[13px] font-medium tracking-wide">
+              <Link
+                href="/"
+                className={`transition-colors py-2 ${
+                  pathname === '/'
+                    ? isTransparent
+                      ? 'text-white font-semibold border-b-2 border-white'
+                      : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                    : isTransparent
+                    ? 'text-neutral-200 hover:text-white'
+                    : 'text-neutral-600 hover:text-neutral-950'
+                }`}
+              >
+                Accueil
+              </Link>
 
             {/* Dropdown: Expertises */}
             <div
@@ -53,16 +88,24 @@ export function Navbar() {
                 href="/expertises/usinage-de-precision-sur-mesure"
                 className={`flex items-center gap-1.5 py-2 transition-colors ${
                   isActive('/expertises')
-                    ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                    ? isTransparent
+                      ? 'text-white font-semibold border-b-2 border-white'
+                      : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                    : isTransparent
+                    ? 'text-neutral-200 hover:text-white'
                     : 'text-neutral-600 hover:text-neutral-950'
                 }`}
               >
                 <span>Expertises</span>
-                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 transition-transform" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform ${
+                    isTransparent ? 'text-neutral-300' : 'text-neutral-400'
+                  }`}
+                />
               </Link>
 
               <div
-                className={`absolute top-full left-0 w-80 bg-white border border-neutral-150 shadow-xl rounded-lg p-3 transition-all duration-200 ${
+                className={`absolute top-full left-0 w-80 bg-white border border-neutral-150 shadow-xl rounded-lg p-3 transition-all duration-200 text-neutral-900 ${
                   expertisesOpen
                     ? 'opacity-100 visible translate-y-1'
                     : 'opacity-0 invisible -translate-y-1 pointer-events-none'
@@ -128,16 +171,24 @@ export function Navbar() {
                 href="/realisations/jantes-aluminium"
                 className={`flex items-center gap-1.5 py-2 transition-colors ${
                   isActive('/realisations')
-                    ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                    ? isTransparent
+                      ? 'text-white font-semibold border-b-2 border-white'
+                      : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                    : isTransparent
+                    ? 'text-neutral-200 hover:text-white'
                     : 'text-neutral-600 hover:text-neutral-950'
                 }`}
               >
                 <span>Réalisations</span>
-                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 transition-transform" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform ${
+                    isTransparent ? 'text-neutral-300' : 'text-neutral-400'
+                  }`}
+                />
               </Link>
 
               <div
-                className={`absolute top-full left-0 w-72 bg-white border border-neutral-150 shadow-xl rounded-lg p-3 transition-all duration-200 ${
+                className={`absolute top-full left-0 w-72 bg-white border border-neutral-150 shadow-xl rounded-lg p-3 transition-all duration-200 text-neutral-900 ${
                   realisationsOpen
                     ? 'opacity-100 visible translate-y-1'
                     : 'opacity-0 invisible -translate-y-1 pointer-events-none'
@@ -182,7 +233,11 @@ export function Navbar() {
               href="/boutique"
               className={`transition-colors py-2 ${
                 pathname === '/boutique'
-                  ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  ? isTransparent
+                    ? 'text-white font-semibold border-b-2 border-white'
+                    : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  : isTransparent
+                  ? 'text-neutral-200 hover:text-white'
                   : 'text-neutral-600 hover:text-neutral-950'
               }`}
             >
@@ -193,7 +248,11 @@ export function Navbar() {
               href="/a-propos"
               className={`transition-colors py-2 ${
                 pathname === '/a-propos'
-                  ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  ? isTransparent
+                    ? 'text-white font-semibold border-b-2 border-white'
+                    : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  : isTransparent
+                  ? 'text-neutral-200 hover:text-white'
                   : 'text-neutral-600 hover:text-neutral-950'
               }`}
             >
@@ -204,7 +263,11 @@ export function Navbar() {
               href="/contact"
               className={`transition-colors py-2 ${
                 pathname === '/contact'
-                  ? 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  ? isTransparent
+                    ? 'text-white font-semibold border-b-2 border-white'
+                    : 'text-neutral-950 font-semibold border-b-2 border-neutral-950'
+                  : isTransparent
+                  ? 'text-neutral-200 hover:text-white'
                   : 'text-neutral-600 hover:text-neutral-950'
               }`}
             >
@@ -216,7 +279,11 @@ export function Navbar() {
           <div className="hidden sm:flex items-center gap-4">
             <a
               href={`tel:${siteConfig.phone.raw}`}
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-neutral-950 text-white text-xs font-medium tracking-wide hover:bg-neutral-800 transition-colors shadow-sm"
+              className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-medium tracking-wide transition-all shadow-sm ${
+                isTransparent
+                  ? 'bg-white/15 backdrop-blur-md text-white border border-white/25 hover:bg-white/25'
+                  : 'bg-neutral-950 text-white hover:bg-neutral-800'
+              }`}
               aria-label={`Appeler BSM Usinage : ${siteConfig.phone.display}`}
             >
               <Phone className="w-3.5 h-3.5 fill-current stroke-none text-[#C5A059]" />
@@ -228,7 +295,11 @@ export function Navbar() {
           <div className="flex items-center gap-3 lg:hidden">
             <a
               href={`tel:${siteConfig.phone.raw}`}
-              className="p-2.5 rounded-full bg-neutral-100 text-neutral-950"
+              className={`p-2.5 rounded-full transition-colors ${
+                isTransparent
+                  ? 'bg-white/15 text-white'
+                  : 'bg-neutral-100 text-neutral-950'
+              }`}
               aria-label="Appeler BSM Usinage"
             >
               <Phone className="w-4 h-4 fill-current stroke-none text-[#C5A059]" />
@@ -236,7 +307,9 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-neutral-700 hover:text-neutral-950"
+              className={`p-2 transition-colors ${
+                isTransparent ? 'text-white hover:text-neutral-200' : 'text-neutral-700 hover:text-neutral-950'
+              }`}
               aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -248,7 +321,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-neutral-200 px-6 pt-4 pb-8 max-h-[85vh] overflow-y-auto">
+        <div className="lg:hidden bg-white border-b border-neutral-200 px-6 pt-4 pb-8 max-h-[85vh] overflow-y-auto text-neutral-900">
           <div className="mb-6 p-4 rounded-lg bg-neutral-50 border border-neutral-200">
             <p className="text-xs text-neutral-500 mb-2">
               Atelier BSM Usinage • Rumilly (Haute-Savoie)
@@ -345,5 +418,9 @@ export function Navbar() {
         </div>
       )}
     </header>
+
+    {/* Spacer for non-home pages so content is not hidden by the fixed header */}
+    {!isHome && <div className="h-20 sm:h-24 w-full" />}
+  </>
   );
 }

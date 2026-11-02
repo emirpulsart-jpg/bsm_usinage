@@ -53,7 +53,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/40" />
 
         {/* Contenu textuel sur la vidéo */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 py-20 text-center text-white">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 sm:pt-40 lg:pt-44 pb-20 sm:pb-24 text-center text-white">
           
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs uppercase tracking-widest text-neutral-200 font-medium">
             <span>Atelier BSM Usinage</span>
